@@ -13,6 +13,8 @@ $env:DATABASE_URL = "postgresql://USER:PASSWORD@AIVEN_HOST:PORT/DATABASE?sslmode
 
 Set `DATABASE_URL` to the connection string from the Aiven service. Keep it in an environment variable or a local secret manager; do not commit it to the repository.
 
+For Render, add `CORS_ORIGINS` as an environment variable containing the exact Vercel frontend URL, for example `https://your-project.vercel.app`. Separate multiple origins with commas when needed. Vercel preview URLs ending in `.vercel.app` are supported automatically.
+
 The API is available at `http://localhost:8000`. Interactive documentation is at `/docs`.
 
 ## Endpoints
