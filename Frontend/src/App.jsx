@@ -4,10 +4,6 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import './App.css'
 import { createQuadrangle, deleteQuadrangle, getQuadrangles } from './services/quadrangleService'
 
-const DEMO_QUADRANGLES = [
-  { id: 'Q-1042', district: 'Mumbai Suburban', status: 'Verified', coordinates: [[72.8749, 19.0852], [72.8834, 19.0852], [72.8834, 19.0784], [72.8749, 19.0784]] },
-  { id: 'Q-1043', district: 'Mumbai Suburban', status: 'Review', coordinates: [[72.8834, 19.0852], [72.8928, 19.0852], [72.8928, 19.0784], [72.8834, 19.0784]] },
-]
 const DISTRICTS = ['Mumbai Suburban', 'Mumbai City', 'Thane', 'Pune']
 const DISTRICT_LOCATIONS = {
   'Mumbai Suburban': { center: [72.8777, 19.076], zoom: 12.3 },
@@ -27,12 +23,12 @@ function App() {
   const mapContainer = useRef(null)
   const mapRef = useRef(null)
   const [district, setDistrict] = useState(DISTRICTS[0])
-  const [quadrangles, setQuadrangles] = useState(DEMO_QUADRANGLES)
-  const [selected, setSelected] = useState(DEMO_QUADRANGLES[0])
+  const [quadrangles, setQuadrangles] = useState([])
+  const [selected, setSelected] = useState(null)
   const [drawing, setDrawing] = useState(false)
   const [points, setPoints] = useState([])
   const [loading, setLoading] = useState(false)
-  const [notice, setNotice] = useState('Demo data shown. Connect the API to load live quadrangles.')
+  const [notice, setNotice] = useState('Loading quadrangles from the API...')
   const [saveState, setSaveState] = useState('idle')
   const mapToken = import.meta.env.VITE_MAPBOX_TOKEN
 
@@ -43,7 +39,7 @@ function App() {
     mapRef.current = map
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
     map.on('load', () => {
-      map.addSource('quadrangles', { type: 'geojson', data: toFeatureCollection(DEMO_QUADRANGLES) })
+      map.addSource('quadrangles', { type: 'geojson', data: toFeatureCollection([]) })
       map.addSource('draft', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } })
       map.addLayer({ id: 'quadrangle-fill', type: 'fill', source: 'quadrangles', paint: { 'fill-color': '#4b8f73', 'fill-opacity': 0.15 } })
       map.addLayer({ id: 'quadrangle-line', type: 'line', source: 'quadrangles', paint: { 'line-color': '#26735b', 'line-width': 2 } })
@@ -89,10 +85,9 @@ function App() {
       }
     }).catch(() => {
       if (!cancelled) {
-        const fallbackData = district === DISTRICTS[0] ? DEMO_QUADRANGLES : []
-        setQuadrangles(fallbackData)
-        setSelected(fallbackData[0] || null)
-        setNotice(district === DISTRICTS[0] ? 'Demo data shown. API unavailable; your map is still interactive.' : 'No marked areas found for this district. API unavailable.')
+        setQuadrangles([])
+        setSelected(null)
+        setNotice('Unable to load quadrangles from the API.')
       }
     }).finally(() => { if (!cancelled) setLoading(false) })
     return () => { cancelled = true }
@@ -137,7 +132,7 @@ function App() {
 
   return (
     <main className="app-shell">
-      <header className="topbar"><div className="brand"><span className="brand-mark">D</span><div><strong>DARUKA</strong><span>Urban Green Analytics</span></div></div><div className="topbar-meta"><span className="status-dot" /> Mapping workspace <span className="divider" /> <span>UTC +05:30</span></div></header>
+      <header className="topbar"><div className="brand"><span className="brand-mark">D</span><div><strong>DARUKAA.EARTH</strong><span>Urban Analytics</span></div></div><div className="topbar-meta"><span className="status-dot" /> Mapping workspace <span className="divider" /> <span>UTC +05:30</span></div></header>
       <section className="workspace">
         <aside className="sidebar">
           <div className="eyebrow">GEOSPATIAL WORKSPACE</div>
