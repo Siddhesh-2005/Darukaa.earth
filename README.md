@@ -13,7 +13,7 @@ https://darukaa-earth-nine.vercel.app/
 
 ## Architecture
 
-<img width="717" height="609" alt="image" src="https://github.com/user-attachments/assets/28ee0e02-a7ee-4629-8119-9074765d17d9" />
+<img width="841" height="766" alt="image" src="https://github.com/user-attachments/assets/b6f24e89-7f39-4ab4-9360-18bdaa02d8b1" />
 
 
 ## Tech Stack
