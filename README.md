@@ -8,6 +8,9 @@ Users can select a district, view existing quadrangles, draw a new four-point po
 
 https://darukaa-earth-nine.vercel.app/
 
+<img width="1901" height="919" alt="image" src="https://github.com/user-attachments/assets/a36da33c-bce7-4d0f-abfb-e7b1fbf181f0" />
+
+
 ## Architecture
 
 <img width="717" height="609" alt="image" src="https://github.com/user-attachments/assets/28ee0e02-a7ee-4629-8119-9074765d17d9" />
